@@ -14,8 +14,19 @@ All It Does
 * Provides a "tomcat::instance" script which lets you install one (or more) Tomcat instances on your server.
 
 
-How To Use
-----------
+How To Use It
+-------------
 
 1. Install this module (via something like [librarian-puppet](http://librarian-puppet.com/)).
 2. Call it from a Puppet script
+
+        # Install Tomcat package
+        include tomcat
+        # Create a new Tomcat instance at ~ubuntu/tomcat
+        tomcat::instance { 'dspace':
+          owner         => "ubuntu",
+          port          => "8080",
+          shutdown_port => "8005",
+          appBase       => "webapps",  # Tell Tomcat to load webapps from this directory 
+        }
+   * Other options are available. See the included "instance.pp" script.

@@ -23,7 +23,7 @@ How To Use It
         # Install Tomcat package
         include tomcat
         # Create a new Tomcat instance at ~ubuntu/tomcat
-        tomcat::instance { 'dspace':
+        tomcat::instance { 'mytomcat':
           owner         => "ubuntu",
           port          => "8080",
           shutdown_port => "8005",

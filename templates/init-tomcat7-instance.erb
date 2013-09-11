@@ -52,8 +52,8 @@ fi
 # The following variables can be overwritten in $DEFAULT
 
 # Run Tomcat 7 as this user ID and group ID
-TOMCAT7_USER=vagrant
-TOMCAT7_GROUP=vagrant
+TOMCAT7_USER=<%=@owner%>
+TOMCAT7_GROUP=<%=@group%>
 
 # this is a work-around until there is a suitable runtime replacement 
 # for dpkg-architecture for arch:all packages
@@ -94,7 +94,7 @@ export JAVA_HOME
 CATALINA_HOME=/usr/share/$PRIMARY_NAME
 
 # Directory for per-instance configuration files and webapps
-CATALINA_BASE=/home/vagrant/tomcat
+CATALINA_BASE=<%=@dir%>
 
 # Use the Java security manager? (yes/no)
 TOMCAT7_SECURITY=no

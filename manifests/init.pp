@@ -44,10 +44,11 @@ class tomcat ($tomcat = "tomcat7")
     require => Package['tomcat'],
   }
 
-  # Enable the default Tomcat service
+  # install the package, but disable the default Tomcat service
   service { 'tomcat':
     name      => $tomcat,
-    enable    => true,
+    enable    => false,
     require   => Package['tomcat'],
+    ensure    => stopped
   }
 }

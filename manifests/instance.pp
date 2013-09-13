@@ -68,8 +68,41 @@ define tomcat::instance($owner,
          group   => $group,
          mode    => 0644,
          content => template("tomcat/server.xml.erb"),
-         notify  => Service['tomcat'], # Tell Tomcat service to reload
        }
+
+   # set up defaults file for this instance
+       file { "/etc/default/tomcat7-${owner}" :
+         ensure  => file,
+         owner   => root,
+         group   => root,
+         content => template("tomcat/default-tomcat7-instance.erb"),
+       }  
+   
+   # set up an init script for this instance
+       file { "/etc/init.d/tomcat7-${owner}" :
+         ensure  => file,
+         owner   => root,
+         group   => root,
+         mode    => 755,
+         content => template("tomcat/init-tomcat7-instance.erb"),
+       }
+
+   # copy the contents of the tomcat policy.d folder to this instance's config folder (it won't boot without them)
+       exec { "copy policy.d":
+         command => "cp -r policy.d ${dir}/conf/ && chown -R ${owner}:${group} ${dir}/conf/policy.d",
+         cwd     => "/etc/tomcat7",
+         require => Package['tomcat7'],
+       }
+
+   # create a default tomcat-users.xml file
+       file {"${dir}/conf/tomcat-users.xml":
+         ensure  => file,
+         owner   => $owner,
+         group   => $group,
+         mode    => 0644,
+         content => template("tomcat/tomcat-users.xml.erb"),
+       }
+
 
     }
 
